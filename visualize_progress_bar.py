@@ -4,9 +4,10 @@ Author: Logan Maupin
 The purpose of this module is to visualize the yearly percentage
 amount in a visual display via a progress bar image.
 '''
-
 import progress_calculator
+import os
 from PIL import Image, ImageDraw, ImageFont
+
 
 def generate_progress_bar(progress):
     # Set the image size
@@ -25,9 +26,16 @@ def generate_progress_bar(progress):
     # Add text to show progress percentage
     font = ImageFont.load_default()
     text = f"{progress * 100:.2f}%"
-    text_width, text_height = draw.textsize(text, font)
+    text_width = draw.textlength(text, font)
+    text_height = text_width // 4
     text_position = ((width - text_width) // 2, (height - text_height) // 2)
     draw.text(text_position, text, fill="black", font=font)
+
+    # remove the previous file before saving just in case we get strange
+    # overwriting related bugs. :) 
+    full_file_path = os.path.abspath("progress_bar.png")
+    if os.path.exists(full_file_path):
+        os.remove(full_file_path)
 
     # Save or display the image
     image.save("progress_bar.png")
