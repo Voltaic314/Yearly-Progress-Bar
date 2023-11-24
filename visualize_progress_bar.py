@@ -31,7 +31,10 @@ def generate_progress_bar(progress):
 
     # Save or display the image
     image.save("progress_bar.png")
-    image.show()
+    
+    # uncomment this out if you'd like python to automatically show the bar
+    # if not, just open up the progress_bar.png image
+    ## image.show()
 
 
 def main():
